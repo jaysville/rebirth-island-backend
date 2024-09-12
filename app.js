@@ -10,6 +10,7 @@ const adminRoutes = require("./routes/admin");
 const userRoutes = require("./routes/user");
 const authRoutes = require("./routes/auth");
 
+const PORT = process.env.PORT || 8080;
 const app = express();
 
 const multer = require("multer");
@@ -67,7 +68,7 @@ app.use((err, req, res, next) => {
     console.log("Connecting to database....");
     await mongoose.connect(process.env.DB_URL);
 
-    app.listen(8080, () => {
+    app.listen(PORT, () => {
       console.log("Sever is live...");
     });
   } catch (e) {
