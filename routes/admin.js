@@ -2,10 +2,22 @@ const express = require("express");
 const merchController = require("../controllers/merch");
 const isAuth = require("../middleware/isAuthenticated");
 const isAdmin = require("../middleware/isAdmin");
+const adminController = require("../controllers/admin");
 
 const router = express.Router();
 
+router.get("/api/orders", isAuth, isAdmin, adminController.getOrders);
+
 router.post("/api/merch", isAuth, isAdmin, merchController.updateMerch);
+
+router.post(
+  "/api/transaction/initialize",
+  adminController.initializeTransaction
+);
+router.post(
+  "/api/transaction/verify/:reference",
+  adminController.verifyTransaction
+);
 
 router.post(
   "/api/merch/edit/:merchId",
