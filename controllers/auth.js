@@ -16,6 +16,7 @@ exports.registerUser = async (req, res, next) => {
   try {
     const hashedPassword = await bcrypt.hash(password, 12);
     const user = new User({ fullName, email, password: hashedPassword });
+    //send a welcome to rebirth island email
     await user.save();
 
     const token = jwt.sign(
