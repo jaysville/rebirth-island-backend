@@ -29,10 +29,42 @@ exports.verifyTransaction = async (req, res, next) => {
 };
 
 exports.getOrders = async (req, res, next) => {
-  //admin has right to fulfill an order, only unfulfilled orders will be fetched
   try {
-    const orders = await Order.find();
+    const orders = await Order.find().select(
+      "fullName totalAmount status createdAt "
+    );
+
     res.status(200).json(orders);
+  } catch (e) {
+    next(new ExpressError(e.message, 500));
+  }
+};
+
+exports.getSingleOrder = async (req, res, next) => {
+  const { orderId } = req.params;
+
+  try {
+    const order = await Order.findById(orderId);
+    if (!order) return next(new ExpressError("Order not found", 404));
+    res.status(200).json(order);
+  } catch (e) {
+    next(new ExpressError(e.message, 500));
+  }
+};
+
+exports.updateOrderStatus = async (req, res, next) => {
+  const { orderId } = req.params;
+  const { status } = req.body;
+
+  try {
+    const order = await Order.findById(orderId);
+    if (!order) return next(new ExpressError("Order not found", 404));
+
+    order.status = status;
+    await order.save();
+
+    //notify user order has been shipped or sumn
+    res.status(200).json({ message: "Status Updated", order });
   } catch (e) {
     next(new ExpressError(e.message, 500));
   }

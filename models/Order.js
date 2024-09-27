@@ -40,6 +40,10 @@ const orderSchema = new Schema(
           ref: "Merch",
           required: true,
         },
+        name: {
+          type: String,
+          required: true,
+        },
         size: {
           type: String,
           required: true,
@@ -48,11 +52,19 @@ const orderSchema = new Schema(
           type: Number,
           required: true,
         },
+        image: {
+          type: String,
+          required: true,
+        },
       },
     ],
     totalAmount: {
       type: Number,
       required: true,
+    },
+    status: {
+      type: String,
+      default: "Pending",
     },
   },
   {

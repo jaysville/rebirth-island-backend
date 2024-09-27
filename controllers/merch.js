@@ -11,6 +11,17 @@ exports.getAllMerch = async (req, res, next) => {
   }
 };
 
+exports.getCollections = async (req, res, next) => {
+  const { collection } = req.params;
+  try {
+    const merch = await Merch.find({ category: collection });
+    if (!merch) return next(new ExpressError("No such merch", 404));
+    res.status(200).json(merch);
+  } catch (e) {
+    next(new ExpressError(e.message, 500));
+  }
+};
+
 exports.getSingleMerch = async (req, res, next) => {
   try {
     const { merchId } = req.params;
@@ -25,7 +36,7 @@ exports.getSingleMerch = async (req, res, next) => {
 
 exports.updateMerch = async (req, res, next) => {
   try {
-    const { name, price, sizes } = req.body;
+    const { name, category, price, sizes } = req.body;
     const images = req.files;
 
     const sizesArray = sizes.trim().split(/\s+/);
@@ -35,7 +46,7 @@ exports.updateMerch = async (req, res, next) => {
     if (!merchId) {
       //create new merch
 
-      const merch = new Merch({ name, price, sizes: sizesArray });
+      const merch = new Merch({ name, category, price, sizes: sizesArray });
 
       for (const image of images) {
         const uploadedImage = await handleUpload(image.buffer, "Rebirth Merch");
@@ -58,6 +69,7 @@ exports.updateMerch = async (req, res, next) => {
         }
       }
       existingMerch.name = name;
+      existingMerch.category = category;
       existingMerch.price = price;
       existingMerch.sizes = sizesArray;
 

@@ -7,7 +7,10 @@ const adminController = require("../controllers/admin");
 const router = express.Router();
 
 router.get("/api/orders", isAuth, isAdmin, adminController.getOrders);
-
+router
+  .route("/api/order/:orderId")
+  .get(isAuth, adminController.getSingleOrder)
+  .post(isAuth, isAdmin, adminController.updateOrderStatus);
 router.post("/api/merch", isAuth, isAdmin, merchController.updateMerch);
 
 router.post(
