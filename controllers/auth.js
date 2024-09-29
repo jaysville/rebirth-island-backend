@@ -3,6 +3,8 @@ const ExpressError = require("../utils/ExpressError");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("../models/User");
+const generateWelcomeEmail = require("../utils/generateWelcomeEmail");
+const sendEmailToUser = require("../utils/sendEmailToUser");
 
 exports.registerUser = async (req, res, next) => {
   const errors = validationResult(req);
@@ -29,6 +31,9 @@ exports.registerUser = async (req, res, next) => {
         expiresIn: "1d",
       }
     );
+
+    const html = generateWelcomeEmail(user.fullName.split(" ")[0]);
+    await sendEmailToUser(email, "Welcome To Rebirth Island", html);
     res.status(201).json({
       user: {
         name: user.fullName,
