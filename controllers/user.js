@@ -52,7 +52,7 @@ exports.placeOrder = async (req, res, next) => {
 
     await sendEmailToUser(email, "Order Confirmation", html);
     await sendEmailToUser(
-      "olaotanabarowei@gmail.com",
+      "rebirthisland7@gmail.com",
       "You recieved an order",
       adminContent
     );
