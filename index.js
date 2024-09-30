@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const express = require("express");
 const ExpressError = require("./utils/ExpressError");
 const cors = require("cors");
-
+const helmet = require("helmet");
 const bodyParser = require("body-parser");
 
 const adminRoutes = require("./routes/admin");
@@ -14,6 +14,7 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 
 const multer = require("multer");
+const morgan = require("morgan");
 
 const storage = multer.memoryStorage();
 
@@ -30,6 +31,9 @@ const fileFilter = (req, file, cb) => {
 };
 
 app.use(bodyParser.json());
+
+app.use(helmet());
+app.use(morgan("common"));
 
 const allowedOrigins = [
   "http://localhost:3000",
