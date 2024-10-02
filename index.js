@@ -38,6 +38,9 @@ app.use(morgan("common"));
 const allowedOrigins = [
   "http://localhost:3000",
   "https://rebirth-island.vercel.app",
+  "https://www.rebirthisland.store",
+  "www.rebirthisland.store",
+  "rebirthisland.store",
 ];
 
 const corsOptions = {
