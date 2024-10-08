@@ -50,12 +50,12 @@ exports.placeOrder = async (req, res, next) => {
     const html = generateOrderConfirmationEmail(order);
     const adminContent = generateAdminOrderConfirmation(order);
 
-    await sendEmailToUser(email, "Order Confirmation", html);
-    await sendEmailToUser(
-      "rebirthisland7@gmail.com",
-      "You recieved an order",
-      adminContent
-    );
+    // await sendEmailToUser(email, "Order Confirmation", html);
+    // await sendEmailToUser(
+    //   "rebirthisland7@gmail.com",
+    //   "You recieved an order",
+    //   adminContent
+    // );
 
     res.status(200).json({ message: "Order placed successfully", order });
   } catch (e) {
@@ -90,7 +90,7 @@ exports.forgotPassword = async (req, res, next) => {
 
     const html = generateResetEmail(user);
 
-    await sendEmailToUser(email, "Reset Your Password", html);
+    // await sendEmailToUser(email, "Reset Your Password", html);
     res
       .status(200)
       .json({ message: "Reset link has been sent to your email." });

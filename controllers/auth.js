@@ -33,7 +33,7 @@ exports.registerUser = async (req, res, next) => {
     );
 
     const html = generateWelcomeEmail(user.fullName.split(" ")[0]);
-    await sendEmailToUser(email, "Welcome To Rebirth Island", html);
+    // await sendEmailToUser(email, "Welcome To Rebirth Island", html);
     res.status(201).json({
       user: {
         name: user.fullName,

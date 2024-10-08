@@ -65,10 +65,10 @@ exports.updateOrderStatus = async (req, res, next) => {
     order.status = status;
     await order.save();
 
-    if (order.status === "Delivered") {
-      const html = generateDeliveredEmail(order);
-      await sendEmailToUser(order.email, "Thanks for shopping with us", html);
-    }
+    // if (order.status === "Delivered") {
+    //   const html = generateDeliveredEmail(order);
+    //   await sendEmailToUser(order.email, "Thanks for shopping with us", html);
+    // }
     res.status(200).json({ message: "Status Updated", order });
   } catch (e) {
     next(new ExpressError(e.message, 500));
