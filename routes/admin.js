@@ -9,7 +9,7 @@ const router = express.Router();
 router.get("/api/orders", isAuth, isAdmin, adminController.getOrders);
 router
   .route("/api/order/:orderId")
-  .get(isAuth, adminController.getSingleOrder)
+  .get(adminController.getSingleOrder)
   .post(isAuth, isAdmin, adminController.updateOrderStatus);
 router.post("/api/merch", isAuth, isAdmin, merchController.updateMerch);
 

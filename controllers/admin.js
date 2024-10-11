@@ -1,6 +1,7 @@
 const Order = require("../models/Order");
 const ExpressError = require("../utils/ExpressError");
 const generateDeliveredEmail = require("../utils/generateDeliveredEmail");
+const generateReceivedEmail = require("../utils/generateReceivedEmail");
 const paystack = require("../utils/Paystack");
 const sendEmailToUser = require("../utils/sendEmailToUser");
 
@@ -65,10 +66,16 @@ exports.updateOrderStatus = async (req, res, next) => {
     order.status = status;
     await order.save();
 
-    // if (order.status === "Delivered") {
-    //   const html = generateDeliveredEmail(order);
-    //   await sendEmailToUser(order.email, "Thanks for shopping with us", html);
-    // }
+    if (order.status === "Received") {
+      const html = generateReceivedEmail(order);
+
+      await sendEmailToUser(order.email, "Order Processing", html);
+    }
+    if (order.status === "Delivered") {
+      const html = generateDeliveredEmail(order);
+      await sendEmailToUser(order.email, "Thanks for shopping with us", html);
+    }
+
     res.status(200).json({ message: "Status Updated", order });
   } catch (e) {
     next(new ExpressError(e.message, 500));

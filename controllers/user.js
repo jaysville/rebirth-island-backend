@@ -50,12 +50,12 @@ exports.placeOrder = async (req, res, next) => {
     const html = generateOrderConfirmationEmail(order);
     const adminContent = generateAdminOrderConfirmation(order);
 
-    // await sendEmailToUser(email, "Order Confirmation", html);
-    // await sendEmailToUser(
-    //   "rebirthisland7@gmail.com",
-    //   "You recieved an order",
-    //   adminContent
-    // );
+    await sendEmailToUser(email, "Order Confirmation", html);
+    await sendEmailToUser(
+      "rebirthisland10@gmail.com",
+      "You recieved an order",
+      adminContent
+    );
 
     res.status(200).json({ message: "Order placed successfully", order });
   } catch (e) {
