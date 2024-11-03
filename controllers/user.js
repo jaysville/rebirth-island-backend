@@ -90,7 +90,7 @@ exports.forgotPassword = async (req, res, next) => {
 
     const html = generateResetEmail(user);
 
-    // await sendEmailToUser(email, "Reset Your Password", html);
+    await sendEmailToUser(email, "Reset Your Password", html);
     res
       .status(200)
       .json({ message: "Reset link has been sent to your email." });
