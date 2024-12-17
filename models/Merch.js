@@ -10,6 +10,10 @@ const merchSchema = new Schema({
     type: Number,
     required: true,
   },
+  discountPrice: {
+    type: Number,
+    required: true,
+  },
   category: {
     type: String,
     required: true,

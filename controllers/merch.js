@@ -36,12 +36,15 @@ exports.getSingleMerch = async (req, res, next) => {
 
 exports.updateMerch = async (req, res, next) => {
   try {
-    const { name, category, price, sizes } = req.body;
+    const { name, category, price, discountPrice, sizes } = req.body;
+    console.log(req.body);
     const images = req.files;
 
     const sizesArray = sizes.trim().split(/\s+/);
 
     const { merchId } = req.params;
+
+    console.log(req.body);
 
     if (!merchId) {
       //create new merch
@@ -72,7 +75,7 @@ exports.updateMerch = async (req, res, next) => {
       existingMerch.category = category;
       existingMerch.price = price;
       existingMerch.sizes = sizesArray;
-
+      existingMerch.discountPrice = discountPrice;
       await existingMerch.save();
       updatedMerch = existingMerch;
     }
