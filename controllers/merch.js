@@ -37,7 +37,6 @@ exports.getSingleMerch = async (req, res, next) => {
 exports.updateMerch = async (req, res, next) => {
   try {
     const { name, category, price, discountPrice, sizes } = req.body;
-    console.log(req.body);
     const images = req.files;
 
     const sizesArray = sizes.trim().split(/\s+/);
