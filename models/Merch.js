@@ -10,10 +10,7 @@ const merchSchema = new Schema({
     type: Number,
     required: true,
   },
-  discountPrice: {
-    type: Number,
-    required: true,
-  },
+
   category: {
     type: String,
     required: true,
@@ -30,7 +27,7 @@ const merchSchema = new Schema({
       required: true,
     },
   ],
-  soldout: Boolean,
+  soldout: { type: Boolean, required: true },
 });
 
 module.exports = mongoose.model("Merch", merchSchema, "merch");

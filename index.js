@@ -15,6 +15,7 @@ const app = express();
 
 const multer = require("multer");
 const morgan = require("morgan");
+const Merch = require("./models/Merch");
 
 const storage = multer.memoryStorage();
 
@@ -33,7 +34,6 @@ const fileFilter = (req, file, cb) => {
 app.use(bodyParser.json());
 
 app.use(helmet());
-app.use(morgan("common"));
 
 const allowedOrigins = [
   "http://localhost:3000",
@@ -41,6 +41,7 @@ const allowedOrigins = [
   "https://www.rebirthisland.store",
   "www.rebirthisland.store",
   "rebirthisland.store",
+  "https://rebirth-v2.vercel.app",
 ];
 
 const corsOptions = {
@@ -82,3 +83,17 @@ app.use((err, req, res, next) => {
     throw new ExpressError("Database connection failed", 500);
   }
 })();
+
+// (async () => {
+//   try {
+//     await mongoose.connect(process.env.DB_URL);
+
+//     const result = await Merch.updateMany({}, { soldout: false });
+//     console.log(`Updated ${result.modifiedCount} merch items`);
+
+//     mongoose.disconnect();
+//   } catch (err) {
+//     console.error("Error resetting soldout fields:", err.message);
+//     process.exit(1);
+//   }
+// })();

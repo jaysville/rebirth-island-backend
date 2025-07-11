@@ -36,7 +36,7 @@ exports.getSingleMerch = async (req, res, next) => {
 
 exports.updateMerch = async (req, res, next) => {
   try {
-    const { name, category, price, discountPrice, sizes } = req.body;
+    const { name, category, price, sizes, soldout } = req.body;
     const images = req.files;
 
     const sizesArray = sizes.trim().split(/\s+/);
@@ -48,7 +48,13 @@ exports.updateMerch = async (req, res, next) => {
     if (!merchId) {
       //create new merch
 
-      const merch = new Merch({ name, category, price, sizes: sizesArray });
+      const merch = new Merch({
+        name,
+        category,
+        price,
+        sizes: sizesArray,
+        soldout: false,
+      });
 
       for (const image of images) {
         const uploadedImage = await handleUpload(image.buffer, "Rebirth Merch");
@@ -74,7 +80,7 @@ exports.updateMerch = async (req, res, next) => {
       existingMerch.category = category;
       existingMerch.price = price;
       existingMerch.sizes = sizesArray;
-      existingMerch.discountPrice = discountPrice;
+      existingMerch.soldout = soldout;
       await existingMerch.save();
       updatedMerch = existingMerch;
     }
